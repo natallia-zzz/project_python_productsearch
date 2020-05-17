@@ -1,14 +1,15 @@
 def is_part_in_list(str_, words):
     for word in words:
-        if str_.lower() in word.lower():
-            return word
+        for elem in word:
+            if str_.lower() in elem.lower():
+                return elem
     return "Nothing is found"
 
 
 def main():
     str_ = 0
     while str_ != 'exit':
-        words = ["bags chanel", "shoes gucci", "coats versace"]
+        words = [["bags chanel", "shoes gucci", "coats versace"], ["hat zara", "dress LoveRepublic"]]
         str_ = input("Введите слово для проверки или exit, чтобы выйти\n")
         if str_ == 'exit':
             break
