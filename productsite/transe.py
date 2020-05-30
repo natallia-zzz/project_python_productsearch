@@ -36,7 +36,15 @@ for row in data:
         product.pr_description=row[2]
     except UnicodeDecodeError:
         pass
-    product.pr_manufacturer=row[3]
-    product.pr_price=row[4]
+    except IndexError:
+        pass
+    try:
+        product.pr_manufacturer=row[3]
+    except IndexError:
+        pass
+    try:
+        product.pr_price=row[4]
+    except IndexError:
+        pass
     product.save()
 

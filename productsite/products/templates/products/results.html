@@ -6,7 +6,15 @@
 <body>
 	<section>
 			<div class="container-fluid container-fluid-max">
-				
+				{% if latest_list %}
+			    <ul>
+				    {% for question in latest_list %}
+				        <li>{{question.pr_id}}</a></li>
+				    {% endfor %}
+				    </ul>
+				{% else %}
+				    <p>No polls are available.</p>
+				{% endif %}
 			</div>
 		</section>
 </body>
