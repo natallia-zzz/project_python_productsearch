@@ -5,8 +5,21 @@
 </head>
 <body>
 	<section>
+		<h2>Результаты поиска:</h2>
 			<div class="container-fluid container-fluid-max">
-				
+				<table>
+					<thead>
+						<th>Название</th><th>Цена</th>
+					</thead>
+					<tbody></tbody>
+					{% for res in object_list %}
+					<tr>
+						<td>{{ res.pr_title }}</td>
+						<td>{{ res.pr_price }}</td>
+					</tr>
+					{% endfor %}
+					</tbody>
+				</table>
 			</div>
 		</section>
 </body>

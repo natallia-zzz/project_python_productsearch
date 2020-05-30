@@ -9,9 +9,9 @@
 	</head>
 	<body>
 		<h1> Online Store </h1>
-		<form>
+		<form action="{% url 'products:results' %}" method="GET">
 		    <div class="md-form mt-0">
-  				<input class="form-control" type="text" placeholder="Search" aria-label="Search">
+  				<input name="res" class="form-control" type="text" placeholder="Search" aria-label="Search">
 			</div>
 		</form>
 
