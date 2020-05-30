@@ -7,3 +7,4 @@ class Product(models.Model):
    pr_description =  models.CharField('description',max_length=15000)
    pr_manufacturer = models.CharField('manufacturer',max_length=30)
    pr_price = models.DecimalField('price',max_digits=8, decimal_places=2)
+
