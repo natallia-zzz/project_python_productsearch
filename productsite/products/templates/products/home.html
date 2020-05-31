@@ -8,12 +8,15 @@
 		<link rel="stylesheet" type="text/css" href="{% static 'products/main.css' %}">
 	</head>
 	<body>
+	    {% block content %}
 		<h1> Online Store </h1>
+		<a href="{% url 'products:signup' %}">Регистрация</a>
+		<a href="{% url 'products:login' %}">Вход</a>
 		<form action="{% url 'products:results' %}" method="GET">
 		    <div class="md-form mt-0">
   				<input name="res" class="form-control" type="text" placeholder="Search" aria-label="Search">
 			</div>
 		</form>
-
+        {% endblock %}
 	</body>
 </html>
