@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 
+
 # Create your views here.
 class HomePageView(generic.TemplateView):
     template_name = 'products/home.html'
@@ -32,3 +33,4 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'products/signup.html', {'form': form})
+
