@@ -15,4 +15,4 @@ class ResultsView(generic.ListView):
     def get_queryset(self):
         query = self.request.GET.get('res')
         result = Product.objects.filter(Q(pr_title__icontains=query)|Q(pr_description__icontains=query)|Q(pr_description__icontains=query))
-        return result
+        return result.order_by('pr_price')
