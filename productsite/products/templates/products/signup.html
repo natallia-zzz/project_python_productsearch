@@ -1,0 +1,11 @@
+
+
+{% block content %}
+  <h2>Sign up</h2>
+  <a href="{% url 'products:home' %}">Назад к поиску</a>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Sign up</button>
+  </form>
+{% endblock %}
