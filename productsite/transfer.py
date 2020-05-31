@@ -11,7 +11,7 @@ from products.models import Product
 
 import csv
 dataReader = csv.reader(open(csv_filepathname, encoding = 'latin_1'), delimiter=',', quotechar='"')
-from decimal import Decimal
+# from decimal import Decimal
 
 for row in dataReader:
     product = Product()
@@ -19,5 +19,5 @@ for row in dataReader:
     product.pr_title=row[1]
     product.pr_description=row[2]
     product.pr_manufacturer=row[3]
-    product.pr_price=Decimal(row[4])
+    product.pr_price=row[4]
     product.save()
