@@ -1,15 +1,21 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import Product
 from django.views import generic
 from django.db.models import Q
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, mixins
 from django.contrib.auth.forms import UserCreationForm
+from . import search_algorithm_strict as test
 
 
 # Create your views here.
 class HomePageView(generic.TemplateView):
     template_name = 'products/home.html'
+    def get_context_data(self, **kwargs):
+# Call the base implementation first to get a context
+        c = super().get_context_data(**kwargs)
+        user = self.request.user
+        return {'user':user}
 
 class ResultsView(generic.ListView):
     model = Product
@@ -34,3 +40,14 @@ def signup(request):
         form = UserCreationForm()
     return render(request, 'products/signup.html', {'form': form})
 
+class ProductView(generic.TemplateView):
+    model = Product
+    template_name = 'products/detail.html'
+    def get_context_data(self, **kwargs):
+        context = get_object_or_404(Product, pk=self.kwargs['pr_id'])
+        return {'product': context}
+
+class CheckoutView(mixins.LoginRequiredMixin, generic.DetailView):
+    context_object_name = 'checkout'
+    login_url = '/products/login/'
+    template_name = 'products/basket.html'
