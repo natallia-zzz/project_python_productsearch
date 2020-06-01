@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import Product
 from django.views import generic
@@ -10,6 +10,11 @@ from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 class HomePageView(generic.TemplateView):
     template_name = 'products/home.html'
+    def get_context_data(self, **kwargs):
+# Call the base implementation first to get a context
+        c = super().get_context_data(**kwargs)
+        user = self.request.user
+        return {'user':user}
 
 class ResultsView(generic.ListView):
     model = Product
@@ -33,4 +38,11 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'products/signup.html', {'form': form})
+
+class ProductView(generic.TemplateView):
+    model = Product
+    template_name = 'products/detail.html'
+    def get_context_data(self, **kwargs):
+        context = get_object_or_404(Product, pk=self.kwargs['pr_id'])
+        return {'product': context}
 

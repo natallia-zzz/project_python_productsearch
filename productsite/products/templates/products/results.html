@@ -1,27 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Results</title>
+    <title>Results</title>
 </head>
 <body>
-	<section>
-		<h2>Результаты поиска:</h2>
-		<a href="{% url 'products:home' %}">Назад к поиску</a>
-		<div class="container-fluid container-fluid-max">
-			<table>
-				<thead>
-					<th>Название</th><th>Цена</th>
-				</thead>
-				<tbody></tbody>
-				{% for res in object_list %}
-				<tr>
-					<td>{{ res.pr_title }}</td>
-					<td>{{ res.pr_price }}</td>
-				</tr>
-				{% endfor %}
-				</tbody>
-			</table>
-		</div>
-	</section>
+    <section>
+        {% extends 'products/home.html' %}
+        {% block content %}
+        <h3>Результаты поиска:</h3>
+        <div class="container-fluid container-fluid-max">
+            <table>
+                {% if object_list%}
+                <thead>
+                    <th>Название</th><th>Цена</th>
+                </thead>
+                <tbody></tbody>
+                {% for res in object_list %}
+                <tr>
+                    <td><a href="{% url 'products:details' res.pr_id %}">{{ res.pr_title }}</a></td>
+                    <td>{{ res.pr_price }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+                {% else %}
+                <p>Нет результатов</p>
+                {% endif %}
+            </table>
+        </div>
+        {% endblock %}
+    </section>
 </body>
 </html>

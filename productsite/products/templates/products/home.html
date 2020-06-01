@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Homepage</title>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-		{% load static %}
-		<link rel="stylesheet" type="text/css" href="{% static 'products/main.css' %}">
-	</head>
-	<body>
-	    {% block content %}
-		<h1> Online Store </h1>
-		<a href="{% url 'products:signup' %}">Регистрация</a>
-		<a href="{% url 'products:login' %}">Вход</a>
-		<form action="{% url 'products:results' %}" method="GET">
-		    <div class="md-form mt-0">
-  				<input name="res" class="form-control" type="text" placeholder="Search" aria-label="Search">
-			</div>
-		</form>
+    <head>
+        <title>Homepage</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'products/main.css' %}">
+    </head>
+    <body>
+    {% if user.is_authenticated %}
+    {{ request.user }} | <a href="#" onClick="document.getElementById('logoutform').submit()"><button type="button">Logout</button></a>
+    <form id="logoutform" method="POST" action="{% url 'products:logout' %}">
+    {% csrf_token %}
+    <input type="hidden">
+    </form>
+    {% else %}
+    <a href="{% url 'products:signup' %}">Sign up</a> | <a href="{% url 'products:logout' %}">login</a>
+    {% endif %}
+        <h1> Online Store </h1>
+        <form action="{% url 'products:results' %}" method="GET">
+            <div class="md-form mt-0">
+                  <input name="res" class="form-control" type="text" placeholder="Search" aria-label="Search">
+            </div>
+        </form>
+        {% block content %}
+        <p>bla bla bla</p>
         {% endblock %}
-	</body>
+    </body>
 </html>
