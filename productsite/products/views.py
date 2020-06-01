@@ -48,5 +48,6 @@ class ProductView(generic.TemplateView):
         return {'product': context}
 
 class CheckoutView(mixins.LoginRequiredMixin, generic.DetailView):
-    login_url = '/login/'
+    context_object_name = 'checkout'
+    login_url = '/products/login/'
     template_name = 'products/basket.html'
