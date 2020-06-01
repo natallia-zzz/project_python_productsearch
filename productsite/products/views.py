@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from .models import Product
 from django.views import generic
 from django.db.models import Q
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, mixins
 from django.contrib.auth.forms import UserCreationForm
 from . import search_algorithm_strict as test
 
@@ -47,3 +47,6 @@ class ProductView(generic.TemplateView):
         context = get_object_or_404(Product, pk=self.kwargs['pr_id'])
         return {'product': context}
 
+class CheckoutView(mixins.LoginRequiredMixin, generic.DetailView):
+    login_url = '/login/'
+    template_name = 'products/basket.html'
