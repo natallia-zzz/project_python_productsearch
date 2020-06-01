@@ -10,5 +10,6 @@ class Product(models.Model):
    pr_price = models.DecimalField('price',max_digits=8, decimal_places=2)
 
 class Basket(models.Model):
-   user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-   prod_id = models.ForeignKey('products.Product', on_delete=models.CASCADE)
+   user = models.ForeignKey(User, on_delete=models.CASCADE)
+   prod = models.ForeignKey('products.Product', on_delete=models.CASCADE)
+   num = models.IntegerField(default = 1)
