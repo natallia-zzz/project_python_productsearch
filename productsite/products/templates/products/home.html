@@ -9,13 +9,12 @@
     </head>
     <body>
     {% if user.is_authenticated %}
-    {{ request.user }} | <a href="#" onClick="document.getElementById('logoutform').submit()"><button type="button">Logout</button></a>
-    <form id="logoutform" method="POST" action="{% url 'products:logout' %}">
+    {{ request.user }} | <a href="{% url 'products:logout' %}">logout</a>
     {% csrf_token %}
     <input type="hidden">
     </form>
     {% else %}
-    <a href="{% url 'products:signup' %}">Sign up</a> | <a href="{% url 'products:logout' %}">login</a>
+    <a href="{% url 'products:signup' %}">Sign up</a> | <a href="{% url 'products:login' %}">login</a>
     {% endif %}
         <h1> Online Store </h1>
         <form action="{% url 'products:results' %}" method="GET">
