@@ -5,6 +5,7 @@ from django.views import generic
 from django.db.models import Q
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from . import search_algorithm_strict as test
 
 
 # Create your views here.
@@ -22,7 +23,7 @@ class ResultsView(generic.ListView):
     context_object_name = 'results'
     def get_queryset(self):
         query = self.request.GET.get('res')
-        result = Product.objects.filter(Q(pr_title__icontains=query)|Q(pr_description__icontains=query)|Q(pr_description__icontains=query))
+        result = Product.objects.filter(test.is_search_in_row_strict(query, Product.object.pr_title))
         return result.order_by('pr_price')
 
 def signup(request):
