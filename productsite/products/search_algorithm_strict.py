@@ -1,5 +1,4 @@
 def is_search_in_row_strict(search, row):
-    print(row.split())
     count = 0
     for word in search.split():
         for elem in row.split():

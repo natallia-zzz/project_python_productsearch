@@ -23,7 +23,7 @@ class ResultsView(generic.ListView):
     context_object_name = 'results'
     def get_queryset(self):
         query = self.request.GET.get('res')
-        result = Product.objects.filter(test.is_search_in_row_strict(query, Product.object.pr_title))
+        result = Product.objects.filter(Q(pr_title__icontains=query)|Q(pr_description__icontains=query)|Q(pr_description__icontains=query))
         return result.order_by('pr_price')
 
 def signup(request):

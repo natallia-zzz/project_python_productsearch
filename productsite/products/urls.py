@@ -11,9 +11,5 @@ urlpatterns = [
     url(r'^signup/$', views.signup, name='signup'),
     path('login/', LoginView.as_view(template_name='products/login.html'), name="login"),
     path('<pr_id>/', views.ProductView.as_view(), name='details'),
-    path('logout/', LogoutView.as_view(next_page='',
-        template_name='products/logout.html'
-        ),
-        name='logout'
-    ),
+    path('logout', LogoutView.as_view(), name='logout'),
 ]
