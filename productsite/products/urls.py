@@ -12,6 +12,6 @@ urlpatterns = [
     path('login/', LoginView.as_view(template_name='products/login.html'), name="login"),
     path('<pr_id>/', views.ProductView.as_view(), name='details'),
     path('logout', LogoutView.as_view(), name='logout'),
-    url(r'^add/$', views.addbin, name = 'add'),
+    path('<pr_id>/add/', views.addbin, name = 'add'),
     path('checkout/', views.CheckoutView.as_view(), name = 'checkout'),
 ]

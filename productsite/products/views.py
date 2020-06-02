@@ -5,9 +5,9 @@ from django.views import generic
 from django.db.models import Q
 from django.contrib.auth import login, authenticate, mixins
 from django.contrib.auth.forms import UserCreationForm
-from . import search_algorithm_strict as test
 from django.urls import reverse
-
+# from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 # Create your views here.
 class HomePageView(generic.TemplateView):
     template_name = 'products/home.html'
@@ -57,12 +57,34 @@ class CheckoutView(mixins.LoginRequiredMixin, generic.TemplateView):
     redirect_field_name = 'products:home'
     template_name = 'products/basket.html'
 
-
+# @login_required
 def addbin(request, pr_id):
-    product = get_object_or_404(Product, pk=pr_id)
+    product = Product.objects.get(pk=pr_id)
     user = request.user
-    num = request.POST['num']
-    item = Basket.object.create(prod=product.pr_id, user=user.id, num=num)
-    return HttpResponseRedirect(reverse('products:checkout', kwargs=(item,)))
+    cart = Basket.objects.create( prod = product, user=user)
+    cart.save()
+    return redirect('products:checkout')
 
 
+class ProductView(generic.TemplateView):
+    model = Product
+    template_name = 'products/detail.html'
+    def get_context_data(self, **kwargs):
+        context = get_object_or_404(Product, pk=self.kwargs['pr_id'])
+        return {'product': context}
+# def add_to_cart(request,book_id):
+#     if request.user.is_authenticated():
+#         try:
+#             book = Book.objects.get(pk=book_id)
+#         except c
+#             pass
+#         else :
+#             try:
+#                 cart = Cart.objects.get(user = request.user, active = True)
+#             except ObjectDoesNotExist:
+#                 cart = Cart.objects.create(user = request.user)
+#                 cart.save()
+#             cart.add_to_cart(book_id)
+#         return redirect('cart')
+#     else:
+#         return redirect('index')

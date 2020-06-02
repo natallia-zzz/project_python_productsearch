@@ -1,20 +1,14 @@
-{% extends 'products/home.html' %}
+
 {% block content %}
 <h3>{{product.pr_title}}</h3><br>
 <p>{{product.pr_description}}</p>
 <p> производитель: {{product.pr_manufacturer}}</p>
 <p>стоимость: {{product.pr_price}}</p>
 {% if user.is_authenticated %}
-<form action="{% url 'products:add' %}" method='post'>
-	{% csrf_token %}
-	<input id = "user" type="number" value = "{{user.id}}" name = "user" hidden>
-	<input id = "prod" type="text" value = "{{product.pr_id}}" name = "prod" hidden>
-	<label for="num">Количество: </label>
-	<input id = "num" type="number" min = "1" name="num">
-	<input type="submit" value="Добавить в корзину">
-</form>
-{% else %}
+<form action="{% url 'products:add' product.pr_id %}" method="post">
+{% csrf_token %}
+<input type="submit" value="add">
+</form>{% else %}
 <p>must be logged in to checkout</p>
 {% endif %}
-
 {% endblock %}
