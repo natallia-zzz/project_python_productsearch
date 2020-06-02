@@ -6,26 +6,75 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
               crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+              integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+              crossorigin="anonymous">
         {% load static %}
         <link rel="stylesheet" type="text/css" href="{% static 'products/main.css' %}">
     </head>
-    <body>
-    {% if user.is_authenticated %}
-    {{ request.user }} | <a href="{% url 'products:logout' %}">logout</a>|
-    <a href="{% url 'products:checkout' request.user.id%}">checkout</a>|
-    <a href="{% url 'products:history' request.user.id%}">history</a>
-    {% csrf_token %}
-    {% else %}
-    <a href="{% url 'products:signup' %}">Sign up</a> | <a href="{% url 'products:login' %}">login</a>
-    {% endif %}
-        <h1> Online Store </h1>
-        <form action="{% url 'products:results' %}" method="GET">
-            <div class="md-form mt-0">
-                  <input name="res" class="form-control" type="text" placeholder="Search" aria-label="Search">
-            </div>
-        </form>
+    <body >
+    <header class="page-header bg-light">
+        <div class="container-fluid ">
+            <nav class="navbar navbar-expand-sm bg-light justify-content">
+                <div class="container-fluid">
+             {% if user.is_authenticated %}
+                    <div class="navbar-header">
+                             <a class="navbar-brand" href="">
+                                 {{ request.user }}</a>
+                    </div>
+                    {% else %}
+                    <div class="navbar-header">
+                             <a class="navbar-brand" href="">
+                                 by Nastiushka and Natashka</a>
+                    </div>
+                    {% endif %}
+<form class="mx-2 my-auto d-inline w-100" action="{% url 'products:results' %}" method="GET" >
+
+        <input name="res" class="form-control" type="text" placeholder="Search" aria-label="Search">
+
+</form>
+                          <ul class="navbar-nav ml-auto navbar-right" >
+                              {% if user.is_authenticated %}
+                          <li >
+                            <a class="nav-link" href="{% url 'products:logout' %}">Logout</a>
+                          </li>
+                          <li >
+                            <a class="nav-link" href="{% url 'products:checkout' request.user.id%}"><i class="fa fa-shopping-basket"></i></a>
+                          </li>
+                          <li >
+                             <a class="nav-link" href="{% url 'products:history' request.user.id%}"><i class="fa fa-history"></i></a>
+                          </li>
+                          {% csrf_token %}
+                          {% else %}
+                          <li>
+                              <a class="nav-link" href="{% url 'products:signup' %}">Signup</a>
+                          </li>
+                          <li >
+                               <a class="nav-link" href="{% url 'products:login' %}">Login</a>
+                          </li>
+                         {% endif %}
+                          </ul>
+                </div>
+            </nav>
+          </div>
+    </header>
+    <main>
+
         {% block content %}
-        <p>bla bla bla</p>
+        <div class="container-fluid">
+        <div class = "row">
+            <div class = "col-4">
+        <img src="https://kwork.com/pics/t3/68/405928-1.jpg" alt="Italian Trulli">
+            </div>
+            <div class = "col-3">
+        <img src="https://media.giphy.com/media/iXV2LWfFiI9lRUdnaB/giphy.gif" alt="Italian Trulli">
+            </div>
+            <div class = "col-5">
+        <img src="https://kwork.com/pics/t3/68/405928-1.jpg" alt="Italian Trulli">
+            </div>
+        </div>
+        </div>
         {% endblock %}
+    </main>
     </body>
 </html>

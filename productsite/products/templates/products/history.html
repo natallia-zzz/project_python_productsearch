@@ -2,14 +2,33 @@
 <html>
     <head>
         <title>History</title>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'products/results.css' %}">
     </head>
     <body>
     <h1>История покупок</h1>
-    <a href="{% url 'products:home' %}">Назад к поиску</a>
-    {% for item in history %}
-    <ul>
-        <li> <a href="{% url 'products:details' item.prod.pr_id %}">{{item.prod.pr_title}}</a></li>
-    </ul>
-    {% endfor %}
+    <h3><b><a href="{% url 'products:home' %}" style="color: #008B8B; " >Назад к поиску</a></b></h3>
+    <table>
+        <thead>
+            <th>
+                Название
+            </th>
+            <th>
+                Цена
+            </th>
+        </thead>
+        <tbody>
+        {% for item in history %}
+        <tr>
+            <td>
+                <a href="{% url 'products:details' item.prod.pr_id %}">{{item.prod.pr_title}}</a>
+            </td>
+            <td>
+                {{item.prod.pr_price}}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
     </body>
 </html>

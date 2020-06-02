@@ -2,23 +2,29 @@
 <html>
 <head>
     <title>Results</title>
+    {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'products/results.css' %}">
 </head>
 <body>
     <section>
-        {% extends 'products/home.html' %}
-        {% block content %}
-        <h3>Результаты поиска:</h3>
-        <div class="container-fluid container-fluid-max">
+
+        <h1>Результаты поиска:</h1>
+        <h3><b><a href="{% url 'products:home' %}" style="color: #008B8B; " >Назад к поиску</a></b></h3>
+
             <table>
                 {% if object_list%}
                 <thead>
                     <th>Название</th><th>Цена</th>
                 </thead>
-                <tbody></tbody>
+                <tbody>
                 {% for res in object_list %}
                 <tr>
-                    <td><a href="{% url 'products:details' res.pr_id %}">{{ res.pr_title }}</a></td>
-                    <td>{{ res.pr_price }}</td>
+                    <td>
+                        <a href="{% url 'products:details' res.pr_id %}" >{{ res.pr_title }}</a>
+                    </td>
+                    <td>
+                        {{ res.pr_price }}
+                    </td>
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -26,8 +32,8 @@
                 <p>Нет результатов</p>
                 {% endif %}
             </table>
-        </div>
-        {% endblock %}
+
+
     </section>
 </body>
 </html>

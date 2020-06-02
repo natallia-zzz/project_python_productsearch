@@ -57,7 +57,7 @@ class CheckoutView(generic.TemplateView):
             total += item.prod.pr_price
         return {'basket': context,'total': total}
 
- @login_required
+@login_required
 def addbin(request, pr_id):
     product = Product.objects.get(pk=pr_id)
     user = request.user
