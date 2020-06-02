@@ -4,7 +4,17 @@
 <p>{{product.pr_description}}</p>
 <p> производитель: {{product.pr_manufacturer}}</p>
 <p>стоимость: {{product.pr_price}}</p>
-<form action="{% url 'products:checkout' %}" method='GET'>
-<button type='submit'> Добавить в корзину </button>
+{% if user.is_authenticated %}
+<form action="{% url 'products:add' %}" method='post'>
+	{% csrf_token %}
+	<input id = "user" type="number" value = "{{user.id}}" name = "user" hidden>
+	<input id = "prod" type="text" value = "{{product.pr_id}}" name = "prod" hidden>
+	<label for="num">Количество: </label>
+	<input id = "num" type="number" min = "1" name="num">
+	<input type="submit" value="Добавить в корзину">
 </form>
+{% else %}
+<p>must be logged in to checkout</p>
+{% endif %}
+
 {% endblock %}
