@@ -13,3 +13,4 @@ class Basket(models.Model):
    user = models.ForeignKey(User, on_delete=models.CASCADE)
    prod = models.ForeignKey('products.Product', on_delete=models.CASCADE)
    num = models.IntegerField(default = 1)
+   inbasket = models.BooleanField(default = True)

@@ -2,19 +2,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Product, Basket
 from django.views import generic
-from django.db.models import Q
+from django.db.models import Q, base
 from django.contrib.auth import login, authenticate, mixins
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
 # from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 # Create your views here.
 class HomePageView(generic.TemplateView):
     template_name = 'products/home.html'
-    # def get_context_data(self, **kwargs):
-    # c = super().get_context_data(**kwargs)
-    # user = self.request.user
-    # return {'user':user}
 
 
 class ResultsView(generic.ListView):
@@ -52,39 +47,29 @@ class ProductView(generic.TemplateView):
         return {'product': context}
 
 
-class CheckoutView(mixins.LoginRequiredMixin, generic.TemplateView):
-    model = Product
-    redirect_field_name = 'products:home'
+class CheckoutView(generic.TemplateView):
+    model = Basket
     template_name = 'products/basket.html'
+    def get_context_data(self, **kwargs):
+        context = Basket.objects.filter(user = self.kwargs['user_id'], inbasket = True)
+        total = 0
+        for item in context:
+            total += item.prod.pr_price
+        return {'basket': context,'total': total}
 
 # @login_required
 def addbin(request, pr_id):
     product = Product.objects.get(pk=pr_id)
     user = request.user
-    cart = Basket.objects.create( prod = product, user=user)
+    number = request.POST
+    num = number.cleaned_data['num']
+    cart = Basket.objects.create(prod = product, user=user, num = num)
     cart.save()
-    return redirect('products:checkout')
+    return HttpResponseRedirect(reverse('products:home'))
 
-
-class ProductView(generic.TemplateView):
-    model = Product
-    template_name = 'products/detail.html'
-    def get_context_data(self, **kwargs):
-        context = get_object_or_404(Product, pk=self.kwargs['pr_id'])
-        return {'product': context}
-# def add_to_cart(request,book_id):
-#     if request.user.is_authenticated():
-#         try:
-#             book = Book.objects.get(pk=book_id)
-#         except c
-#             pass
-#         else :
-#             try:
-#                 cart = Cart.objects.get(user = request.user, active = True)
-#             except ObjectDoesNotExist:
-#                 cart = Cart.objects.create(user = request.user)
-#                 cart.save()
-#             cart.add_to_cart(book_id)
-#         return redirect('cart')
-#     else:
-#         return redirect('index')
+def buy(request, user_id):
+    checked = Basket.get.objects(user = user_id)
+    for item in checked:
+        item.inbasket = False
+        item.save()
+    return HttpResponseRedirect(reverse('products:home'))

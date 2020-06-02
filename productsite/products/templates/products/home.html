@@ -9,7 +9,7 @@
     </head>
     <body>
     {% if user.is_authenticated %}
-    {{ request.user }} | <a href="{% url 'products:logout' %}">logout</a>
+    {{ request.user }} | <a href="{% url 'products:logout' %}">logout</a>|<a href="{% url 'products:checkout' request.user.id%}">checkout</a>
     {% csrf_token %}
     <input type="hidden">
     </form>

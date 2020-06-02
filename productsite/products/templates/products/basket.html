@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Homepage</title>
+        <title>Checkout</title>
     </head>
     <body>
-    <p>{{item}}</p>
+    <h1>Корзина пользователя</h1>
+    <a href="{% url 'products:home' %}">Назад к поиску</a>
+    {% for item in basket %}
+    <ul>
+        <li> <a href="{% url 'products:details' item.prod.pr_id %}">{{item.prod.pr_title}}</a>|{{item.prod.pr_price}}</li>
+    </ul>
+    {% endfor %}
+    <br>
+    <p>{{total}}</p>
     </body>
 </html>

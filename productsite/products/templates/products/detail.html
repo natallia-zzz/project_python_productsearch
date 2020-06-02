@@ -1,13 +1,13 @@
-
+{% extends 'products/home.html' %}
 {% block content %}
 <h3>{{product.pr_title}}</h3><br>
 <p>{{product.pr_description}}</p>
 <p> производитель: {{product.pr_manufacturer}}</p>
 <p>стоимость: {{product.pr_price}}</p>
 {% if user.is_authenticated %}
-<form action="{% url 'products:add' product.pr_id %}" method="post">
+<form action="{% url 'products:add' product.pr_id %}" method="get">
 {% csrf_token %}
-<input type="submit" value="add">
+<input type="submit" value="Добавить в корзину">
 </form>{% else %}
 <p>must be logged in to checkout</p>
 {% endif %}
