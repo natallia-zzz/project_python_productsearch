@@ -6,7 +6,7 @@ from django.db.models import Q, base
 from django.contrib.auth import login, authenticate, mixins
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
-# from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 class HomePageView(generic.TemplateView):
     template_name = 'products/home.html'
@@ -57,7 +57,7 @@ class CheckoutView(generic.TemplateView):
             total += item.prod.pr_price
         return {'basket': context,'total': total}
 
-# @login_required
+ @login_required
 def addbin(request, pr_id):
     product = Product.objects.get(pk=pr_id)
     user = request.user
