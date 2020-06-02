@@ -4,12 +4,8 @@
 <p>{{product.pr_description}}</p>
 <p> производитель: {{product.pr_manufacturer}}</p>
 <p>стоимость: {{product.pr_price}}</p>
-{% if user.is_authenticated %}
 <form action="{% url 'products:add' product.pr_id %}" method="post">
 {% csrf_token %}
 <input type="submit" value="Добавить в корзину">
 </form>
-{% else %}
-<p>must be logged in to checkout</p>
-{% endif %}
 {% endblock %}
