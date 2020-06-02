@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>History</title>
+    </head>
+    <body>
+    <h1>История покупок</h1>
+    <a href="{% url 'products:home' %}">Назад к поиску</a>
+    {% for item in history %}
+    <ul>
+        <li> <a href="{% url 'products:details' item.prod.pr_id %}">{{item.prod.pr_title}}</a></li>
+    </ul>
+    {% endfor %}
+    </body>
+</html>

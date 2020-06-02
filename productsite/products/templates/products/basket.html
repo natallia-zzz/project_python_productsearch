@@ -13,5 +13,9 @@
     {% endfor %}
     <br>
     <p>{{total}}</p>
+    <form action="{% url 'products:buy' request.user.id %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Купить">
+    </form>
     </body>
 </html>

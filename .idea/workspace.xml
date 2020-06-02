@@ -1,4 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f517b691-8500-4c51-a78e-87783b910f65" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/project_python_productsearch.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/project_python_productsearch.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/productsite/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/productsite/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/productsite/products/templates/products/basket.html" beforeDir="false" afterPath="$PROJECT_DIR$/productsite/products/templates/products/basket.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/productsite/products/templates/products/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/productsite/products/templates/products/detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/productsite/products/templates/products/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/productsite/products/templates/products/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/productsite/products/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/productsite/products/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/productsite/products/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/productsite/products/views.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1cfmXFItLEZRKhX39aRAtR2wHcj" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f517b691-8500-4c51-a78e-87783b910f65" name="Default Changelist" comment="" />
+      <created>1591047788889</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1591047788889</updated>
+      <workItem from="1591047794065" duration="21981000" />
+    </task>
+    <task id="LOCAL-00001" summary="checkout">
+      <created>1591105098180</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1591105098180</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="checkout" />
+    <option name="LAST_COMMIT_MESSAGE" value="checkout" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="320" y="117" key="#Inspections" timestamp="1591047870932">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="320" y="117" key="#Inspections/0.0.1440.900@0.0.1440.900" timestamp="1591047870932" />
+    <state x="184" y="113" width="1071" height="715" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1591048436012">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="184" y="113" width="1071" height="715" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1591048436012" />
+    <state x="458" y="205" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1591085700596">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="458" y="205" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1440.900@0.0.1440.900" timestamp="1591085700596" />
+    <state x="267" y="55" key="CommitChangelistDialog2" timestamp="1591105097690">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="267" y="55" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1591105097690" />
+    <state x="229" y="89" key="SettingsEditor" timestamp="1591048398591">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="229" y="89" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1591048398591" />
+    <state x="376" y="284" key="com.intellij.ide.util.TipDialog" timestamp="1591047794237">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="376" y="284" key="com.intellij.ide.util.TipDialog/0.0.1440.900@0.0.1440.900" timestamp="1591047794237" />
+  </component>
 </project>

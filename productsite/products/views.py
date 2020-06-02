@@ -61,15 +61,20 @@ class CheckoutView(generic.TemplateView):
 def addbin(request, pr_id):
     product = Product.objects.get(pk=pr_id)
     user = request.user
-    number = request.POST
-    num = number.cleaned_data['num']
-    cart = Basket.objects.create(prod = product, user=user, num = num)
+    cart = Basket.objects.create(prod = product, user=user)
     cart.save()
     return HttpResponseRedirect(reverse('products:home'))
 
 def buy(request, user_id):
-    checked = Basket.get.objects(user = user_id)
+    checked = Basket.objects.filter(user = user_id)
     for item in checked:
         item.inbasket = False
         item.save()
     return HttpResponseRedirect(reverse('products:home'))
+
+class HistoryView(generic.TemplateView):
+    model = Basket
+    template_name = 'products/history.html'
+    def get_context_data(self, **kwargs):
+        context = Basket.objects.filter(user = self.kwargs['user_id'], inbasket = False)
+        return {'history': context}
