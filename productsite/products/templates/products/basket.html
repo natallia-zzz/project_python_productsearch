@@ -16,6 +16,9 @@
             <th>
                 Цена
             </th>
+            <th>
+                Количество
+            </th>
         </thead>
         <tbody>
         {% for item in basket %}
@@ -25,6 +28,15 @@
             </td>
             <td>
                 {{item.prod.pr_price}}
+            </td>
+            <td>
+                {{item.num}}
+            </td>
+            <td>
+                <form action="{% url 'products:del' item.prod.pr_id %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Delete">
+                </form>
             </td>
         </tr>
         {% endfor %}

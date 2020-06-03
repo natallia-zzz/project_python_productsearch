@@ -1,15 +1,21 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from .models import Product, Basket
 from django.views import generic
 from django.db.models import Q, base
-from django.contrib.auth import login, authenticate, mixins
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+
+
 # Create your views here.
 class HomePageView(generic.TemplateView):
     template_name = 'products/home.html'
+
+    def get_context_data(self):
+        context = Product.objects.all()[:5]
+        return {'recommend': context}
 
 
 class ResultsView(generic.ListView):
@@ -42,6 +48,7 @@ def signup(request):
 class ProductView(generic.TemplateView):
     model = Product
     template_name = 'products/detail.html'
+
     def get_context_data(self, **kwargs):
         context = get_object_or_404(Product, pk=self.kwargs['pr_id'])
         return {'product': context}
@@ -50,31 +57,51 @@ class ProductView(generic.TemplateView):
 class CheckoutView(generic.TemplateView):
     model = Basket
     template_name = 'products/basket.html'
+
     def get_context_data(self, **kwargs):
-        context = Basket.objects.filter(user = self.kwargs['user_id'], inbasket = True)
+        context = Basket.objects.filter(user=self.kwargs['user_id'], inbasket=True)
         total = 0
         for item in context:
-            total += item.prod.pr_price
-        return {'basket': context,'total': total}
+            total += item.num * item.prod.pr_price
+        return {'basket': context, 'total': total}
+
 
 @login_required
 def addbin(request, pr_id):
-    product = Product.objects.get(pk=pr_id)
     user = request.user
-    cart = Basket.objects.create(prod = product, user=user)
-    cart.save()
-    return HttpResponseRedirect(reverse('products:home'))
+    product = Product.objects.get(pk=pr_id)
+    try:
+        cart = Basket.objects.get(prod=product, user=user, inbasket=True)
+    except Basket.DoesNotExist:
+        cart = Basket.objects.create(prod=product, user=user)
+        cart.save()
+        return HttpResponseRedirect(reverse('products:checkout', args=(user.id,)))
+    else:
+        cart.num += 1
+        cart.save()
+        return HttpResponseRedirect(reverse('products:checkout', args=(user.id,)))
+
 
 def buy(request, user_id):
-    checked = Basket.objects.filter(user = user_id)
+    checked = Basket.objects.filter(user=user_id)
     for item in checked:
         item.inbasket = False
         item.save()
     return HttpResponseRedirect(reverse('products:home'))
 
+
+def delete(request, pr_id):
+    user = request.user
+    product = Product.objects.get(pk=pr_id)
+    checked = Basket.objects.get(user=user.id, prod=product, inbasket=True)
+    checked.delete()
+    return HttpResponseRedirect(reverse('products:checkout', args=(user.id,)))
+
+
 class HistoryView(generic.TemplateView):
     model = Basket
     template_name = 'products/history.html'
+
     def get_context_data(self, **kwargs):
-        context = Basket.objects.filter(user = self.kwargs['user_id'], inbasket = False)
+        context = Basket.objects.filter(user=self.kwargs['user_id'], inbasket=False)
         return {'history': context}
