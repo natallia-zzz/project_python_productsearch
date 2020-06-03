@@ -86,7 +86,7 @@ def addbin(request, pr_id):
     except Basket.DoesNotExist:
         cart = Basket.objects.create(prod=product, user=user)
         cart.save()
-        return HttpResponseRedirect(reverse('products:checkout', args=(user.id,)))
+        return HttpResponseRedirect(reverse('products:checkout', args=(user.id,course)))
     else:
         cart.num += 1
         cart.save()
@@ -106,7 +106,8 @@ def delete(request, pr_id):
     product = Product.objects.get(pk=pr_id)
     checked = Basket.objects.get(user=user.id, prod=product, inbasket=True)
     checked.delete()
-    return HttpResponseRedirect(reverse('products:checkout', args=(user.id,)))
+    course = 1
+    return HttpResponseRedirect(reverse('products:checkout', args=(user.id,course)))
 
 
 class HistoryView(generic.TemplateView):
