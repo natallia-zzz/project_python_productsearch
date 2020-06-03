@@ -3,6 +3,7 @@
     <head>
         <title>Checkout</title>
         {% load static %}
+         {% load custom_tags %}
         <link rel="stylesheet" type="text/css" href="{% static 'products/results.css' %}">
     </head>
     <body>
@@ -27,7 +28,7 @@
                 <a href="{% url 'products:details' item.prod.pr_id %}">{{item.prod.pr_title}}</a>
             </td>
             <td>
-                {{item.prod.pr_price}}
+                {% multiply a=course  b=item.prod.pr_price %}
             </td>
             <td>
                 {{item.num}}
@@ -44,7 +45,7 @@
     </table>
     <br>
 
-    <p><b>Total:</b>{{total}}</p>
+    <p><b>Total:</b>{% multiply a=total b=course %}</p>
     <form action="{% url 'products:buy' request.user.id %}" method="post">
     {% csrf_token %}
     <input type="submit" value="Купить">

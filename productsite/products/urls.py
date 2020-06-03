@@ -17,4 +17,5 @@ urlpatterns = [
     path('checkout/<user_id>', views.CheckoutView.as_view(), name = 'checkout'),
     path('buy/<user_id>', views.buy, name = 'buy'),
     path('history/<user_id>', views.HistoryView.as_view(), name = 'history'),
+    path('checkout/<user_id>/<course>', views.CourseView.as_view(), name='course'),
 ]

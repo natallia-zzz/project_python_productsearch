@@ -78,6 +78,25 @@
                 </tbody>
             </table>
         </div>
+        <div class = "container-fluid">
+            <table>
+                <thead>
+                <th>Курс валюты</th>
+                <th>USD</th>
+                <th>GBP</th>
+                </thead>
+                <tr>
+                    <td>{{ date }}</td>
+                    {% if user.is_authenticated %}
+                    <td><a href="{% url 'products:course' user_id=request.user.id course=USD %}">{{ USD }}</a></td>
+                    <td><a href="{% url 'products:course' user_id=request.user.id course=GBP %}">{{ GBP }}</a></td>
+                    {% else %}
+                    <td>{{ USD }}</td>
+                    <td>{{ GBP }}</td>
+                    {% endif %}
+                </tr>
+            </table>
+        </div>
         <div class="container-fluid">
         <div class = "row">
             <div class = "col-4">

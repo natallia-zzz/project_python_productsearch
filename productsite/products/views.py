@@ -7,6 +7,8 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+import requests
+from decimal import Decimal
 
 
 # Create your views here.
@@ -15,7 +17,9 @@ class HomePageView(generic.TemplateView):
 
     def get_context_data(self):
         context = Product.objects.all()[:5]
-        return {'recommend': context}
+        response = requests.get('https://api.ratesapi.io/api/latest')
+        bank = response.json()
+        return {'recommend': context, 'USD': bank['rates']['USD'], 'date': bank['date'], 'GBP': bank['rates']['GBP']}
 
 
 class ResultsView(generic.ListView):
@@ -63,7 +67,7 @@ class CheckoutView(generic.TemplateView):
         total = 0
         for item in context:
             total += item.num * item.prod.pr_price
-        return {'basket': context, 'total': total}
+        return {'basket': context, 'total': total, 'course': 1}
 
 
 @login_required
@@ -105,3 +109,18 @@ class HistoryView(generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = Basket.objects.filter(user=self.kwargs['user_id'], inbasket=False)
         return {'history': context}
+
+
+class CourseView(generic.TemplateView):
+    model = Basket
+    template_name = 'products/basket.html'
+
+    def get_context_data(self, **kwargs):
+        context = Basket.objects.filter(user=self.kwargs['user_id'], inbasket=True)
+        course = Decimal(self.kwargs['course'])
+        total = 0
+        for item in context:
+            total += item.num * item.prod.pr_price
+        return {'basket': context, 'total': total, 'course': course}
+
+
