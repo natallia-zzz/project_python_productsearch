@@ -13,18 +13,12 @@
             <th>
                 Название
             </th>
-            <th>
-                Цена
-            </th>
         </thead>
         <tbody>
         {% for item in history %}
         <tr>
             <td>
-                <a href="{% url 'products:details' item.prod.pr_id %}">{{item.prod.pr_title}}</a>
-            </td>
-            <td>
-                {{item.prod.pr_price}}
+                <a href="{% url 'products:details' pr_id=item.prod.pr_id course=1%}">{{item.prod.pr_title}}</a>
             </td>
         </tr>
         {% endfor %}

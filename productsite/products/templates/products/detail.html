@@ -1,9 +1,13 @@
 {% extends 'products/home.html' %}
 {% block content %}
+{% load custom_tags %}
 <h3>{{product.pr_title}}</h3><br>
 <p>{{product.pr_description}}</p>
 <p> производитель: {{product.pr_manufacturer}}</p>
-<p>стоимость: {{product.pr_price}}</p>
+<p>стоимость: {% multiply a=product.pr_price b=course %}</p>
+<p><a href="{% url 'products:details' pr_id=product.pr_id course=1 %}">EUR</a></p>
+<p><a href="{% url 'products:details' pr_id=product.pr_id course=USD %}">USD</a></p>
+<p><a href="{% url 'products:details' pr_id=product.pr_id course=GBP %}">GBP</a></p>
 <form action="{% url 'products:add' product.pr_id %}" method="post">
 {% csrf_token %}
 <input type="submit" value="Добавить в корзину">

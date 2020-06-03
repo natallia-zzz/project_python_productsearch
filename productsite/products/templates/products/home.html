@@ -19,7 +19,7 @@
                 <div class="container-fluid">
              {% if user.is_authenticated %}
                     <div class="navbar-header">
-                             <a class="navbar-brand" href="">
+                             <a class="navbar-brand" href="{% url 'products:home' %}">
                                  {{ request.user }}</a>
                     </div>
                     {% else %}
@@ -39,10 +39,10 @@
                             <a class="nav-link" href="{% url 'products:logout' %}">Logout</a>
                           </li>
                           <li >
-                            <a class="nav-link" href="{% url 'products:checkout' request.user.id%}"><i class="fa fa-shopping-basket"></i></a>
+                            <a class="nav-link" href="{% url 'products:checkout' user_id=request.user.id course=1%}"><i class="fa fa-shopping-basket"></i></a>
                           </li>
                           <li >
-                             <a class="nav-link" href="{% url 'products:history' request.user.id%}"><i class="fa fa-history"></i></a>
+                             <a class="nav-link" href="{% url 'products:history' request.user.id %}"><i class="fa fa-history"></i></a>
                           </li>
                           {% csrf_token %}
                           {% else %}
@@ -71,7 +71,7 @@
                 {% for item in recommend %}
                 <tr>
                     <td>
-                        <a href="{% url 'products:details' item.pr_id %}">{{item.pr_title}}</a>
+                        <a href="{% url 'products:details' pr_id=item.pr_id course=1 %}">{{item.pr_title}}</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -87,13 +87,8 @@
                 </thead>
                 <tr>
                     <td>{{ date }}</td>
-                    {% if user.is_authenticated %}
-                    <td><a href="{% url 'products:course' user_id=request.user.id course=USD %}">{{ USD }}</a></td>
-                    <td><a href="{% url 'products:course' user_id=request.user.id course=GBP %}">{{ GBP }}</a></td>
-                    {% else %}
                     <td>{{ USD }}</td>
                     <td>{{ GBP }}</td>
-                    {% endif %}
                 </tr>
             </table>
         </div>

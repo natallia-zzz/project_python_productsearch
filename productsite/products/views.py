@@ -16,9 +16,9 @@ class HomePageView(generic.TemplateView):
     template_name = 'products/home.html'
 
     def get_context_data(self):
-        context = Product.objects.all()[:5]
         response = requests.get('https://api.ratesapi.io/api/latest')
         bank = response.json()
+        context = Product.objects.all()[:5]
         return {'recommend': context, 'USD': bank['rates']['USD'], 'date': bank['date'], 'GBP': bank['rates']['GBP']}
 
 
@@ -54,25 +54,32 @@ class ProductView(generic.TemplateView):
     template_name = 'products/detail.html'
 
     def get_context_data(self, **kwargs):
+        response = requests.get('https://api.ratesapi.io/api/latest')
+        bank = response.json()
         context = get_object_or_404(Product, pk=self.kwargs['pr_id'])
-        return {'product': context}
+        course = Decimal(self.kwargs['course'])
+        return {'product': context,'USD': bank['rates']['USD'], 'GBP': bank['rates']['GBP'], 'course':course}
 
 
 class CheckoutView(generic.TemplateView):
     model = Basket
     template_name = 'products/basket.html'
-
     def get_context_data(self, **kwargs):
+        response = requests.get('https://api.ratesapi.io/api/latest')
+        bank = response.json()
         context = Basket.objects.filter(user=self.kwargs['user_id'], inbasket=True)
         total = 0
+        course = Decimal(self.kwargs['course'])
         for item in context:
             total += item.num * item.prod.pr_price
-        return {'basket': context, 'total': total, 'course': 1}
+        return {'basket': context, 'total': total, 'course': course,'USD': bank['rates']['USD'],
+                'GBP': bank['rates']['GBP'],}
 
 
 @login_required
 def addbin(request, pr_id):
     user = request.user
+    course = 1
     product = Product.objects.get(pk=pr_id)
     try:
         cart = Basket.objects.get(prod=product, user=user, inbasket=True)
@@ -83,7 +90,7 @@ def addbin(request, pr_id):
     else:
         cart.num += 1
         cart.save()
-        return HttpResponseRedirect(reverse('products:checkout', args=(user.id,)))
+        return HttpResponseRedirect(reverse('products:checkout', args=(user.id,course)))
 
 
 def buy(request, user_id):
@@ -110,17 +117,5 @@ class HistoryView(generic.TemplateView):
         context = Basket.objects.filter(user=self.kwargs['user_id'], inbasket=False)
         return {'history': context}
 
-
-class CourseView(generic.TemplateView):
-    model = Basket
-    template_name = 'products/basket.html'
-
-    def get_context_data(self, **kwargs):
-        context = Basket.objects.filter(user=self.kwargs['user_id'], inbasket=True)
-        course = Decimal(self.kwargs['course'])
-        total = 0
-        for item in context:
-            total += item.num * item.prod.pr_price
-        return {'basket': context, 'total': total, 'course': course}
 
 
