@@ -20,7 +20,7 @@
                 {% for res in object_list %}
                 <tr>
                     <td>
-                        <a href="{% url 'products:details' res.pr_id %}" >{{ res.pr_title }}</a>
+                        <a href="{% url 'products:details' pr_id=res.pr_id course=1 %}" >{{ res.pr_title }}</a>
                     </td>
                     <td>
                         {{ res.pr_price }}

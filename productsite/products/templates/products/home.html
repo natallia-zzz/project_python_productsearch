@@ -10,7 +10,7 @@
               integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
               crossorigin="anonymous">
         {% load static %}
-        <link rel="stylesheet" type="text/css" href="{% static 'products/main.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'products/results.css' %}">
     </head>
     <body >
     <header class="page-header bg-light">
@@ -19,7 +19,7 @@
                 <div class="container-fluid">
              {% if user.is_authenticated %}
                     <div class="navbar-header">
-                             <a class="navbar-brand" href="">
+                             <a class="navbar-brand" href="{% url 'products:home' %}">
                                  {{ request.user }}</a>
                     </div>
                     {% else %}
@@ -28,21 +28,21 @@
                                  by Nastiushka and Natashka</a>
                     </div>
                     {% endif %}
-<form class="mx-2 my-auto d-inline w-100" action="{% url 'products:results' %}" method="GET" >
+                    <form class="mx-2 my-auto d-inline w-100" action="{% url 'products:results' %}" method="GET" >
 
-        <input name="res" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                            <input name="res" class="form-control" type="text" placeholder="Search" aria-label="Search">
 
-</form>
+                    </form>
                           <ul class="navbar-nav ml-auto navbar-right" >
                               {% if user.is_authenticated %}
                           <li >
                             <a class="nav-link" href="{% url 'products:logout' %}">Logout</a>
                           </li>
                           <li >
-                            <a class="nav-link" href="{% url 'products:checkout' request.user.id%}"><i class="fa fa-shopping-basket"></i></a>
+                            <a class="nav-link" href="{% url 'products:checkout' user_id=request.user.id course=1%}"><i class="fa fa-shopping-basket"></i></a>
                           </li>
                           <li >
-                             <a class="nav-link" href="{% url 'products:history' request.user.id%}"><i class="fa fa-history"></i></a>
+                             <a class="nav-link" href="{% url 'products:history' request.user.id %}"><i class="fa fa-history"></i></a>
                           </li>
                           {% csrf_token %}
                           {% else %}
@@ -59,8 +59,39 @@
           </div>
     </header>
     <main>
-
         {% block content %}
+        <div class="container-fluid">
+            <table>
+                <thead>
+                    <th>
+                        <h3>Рекомендации</h3>
+                    </th>
+                </thead>
+                <tbody>
+                {% for item in recommend %}
+                <tr>
+                    <td>
+                        <a href="{% url 'products:details' pr_id=item.pr_id course=1 %}">{{item.pr_title}}</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class = "container-fluid">
+            <table>
+                <thead>
+                <th>Курс валюты</th>
+                <th>USD</th>
+                <th>GBP</th>
+                </thead>
+                <tr>
+                    <td>{{ date }}</td>
+                    <td>{{ USD }}</td>
+                    <td>{{ GBP }}</td>
+                </tr>
+            </table>
+        </div>
         <div class="container-fluid">
         <div class = "row">
             <div class = "col-4">

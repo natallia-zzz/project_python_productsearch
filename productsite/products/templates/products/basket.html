@@ -3,11 +3,12 @@
     <head>
         <title>Checkout</title>
         {% load static %}
+        {% load custom_tags %}
         <link rel="stylesheet" type="text/css" href="{% static 'products/results.css' %}">
     </head>
     <body>
     <h1>Корзина пользователя</h1>
-    <h3><b><a href="{% url 'products:home' %}" style="color: #008B8B; " >Назад к поиску</a></b></h3>
+    <h3><b><a href="{% url 'products:home' %}"  >Назад к поиску</a></b></h3>
     <table>
         <thead>
             <th>
@@ -16,23 +17,37 @@
             <th>
                 Цена
             </th>
+            <th>
+                Количество
+            </th>
         </thead>
         <tbody>
         {% for item in basket %}
         <tr>
             <td>
-                <a href="{% url 'products:details' item.prod.pr_id %}">{{item.prod.pr_title}}</a>
+                <a href="{% url 'products:details' pr_id=item.prod.pr_id course=1 %}">{{item.prod.pr_title}}</a>
             </td>
             <td>
-                {{item.prod.pr_price}}
+                {% multiply a=course  b=item.prod.pr_price %}
+            </td>
+            <td>
+                {{item.num}}
+            </td>
+            <td>
+                <form action="{% url 'products:del' item.prod.pr_id %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Delete">
+                </form>
             </td>
         </tr>
         {% endfor %}
         </tbody>
     </table>
     <br>
-
-    <p><b>Total:</b>{{total}}</p>
+    <p><b>Total:</b>{% multiply a=total b=course %}</p>
+    <p><a href="{% url 'products:checkout' user_id=request.user.id course=1 %}">EUR</a></p>
+    <p><a href="{% url 'products:checkout' user_id=request.user.id course=USD %}">USD</a></p>
+    <p><a href="{% url 'products:checkout' user_id=request.user.id course=GBP %}">GBP</a></p>
     <form action="{% url 'products:buy' request.user.id %}" method="post">
     {% csrf_token %}
     <input type="submit" value="Купить">
